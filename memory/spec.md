@@ -26,4 +26,4 @@ No application data model or auth is required for this static landing page. The 
 
 ## Visual system
 
-Editorial craft luxury: warm ivory, deep indigo, soga brown, maroon, and ochre; Lora headings; Plus Jakarta Sans body; IBM Plex Mono labels; kawung motif and handmade texture accents. The page uses the supplied Batika product assets plus a curated artisan image for the story section.
+Editorial craft luxury inspired by the approved reference: warm ivory canvas, deep navy headline, maroon hero CTA, green WhatsApp actions, and a wide full-bleed hero image of the supplied Batika collection. The opening collection section uses a left editorial introduction beside four compact horizontal product cards. Typography remains Lora headings, Plus Jakarta Sans body, and IBM Plex Mono labels; kawung-inspired motif accents frame the hero without competing with the product photography. The page uses supplied Batika product assets plus a curated artisan image for the story section.

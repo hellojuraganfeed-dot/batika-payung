@@ -19,8 +19,6 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
 const ASSETS = {
   hero:
     "https://customer-assets-lqy194kg.emergentagent.net/job_6bed0943-17d5-452f-912e-2c35378d24d9/artifacts/hf88muwl_hero%20img%20Batika.webp",
@@ -34,6 +32,8 @@ const ASSETS = {
     "https://customer-assets-lqy194kg.emergentagent.net/job_6bed0943-17d5-452f-912e-2c35378d24d9/artifacts/6o9j49z6_Logo%20Batika.jpg",
   artisan:
     "https://images.unsplash.com/photo-1586319826907-1ff4aadbaddc?auto=format&fit=crop&w=1200&q=85",
+  stockBag:
+    "https://images.unsplash.com/photo-1591548244205-3c9b9ad258f6?auto=format&fit=crop&w=900&q=85",
 };
 
 const WHATSAPP_NUMBER = "6285800288414";
@@ -42,10 +42,11 @@ const whatsappUrl = (message: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 const navItems = [
+  { label: "Beranda", href: "#top", testId: "nav-link-beranda" },
   { label: "Koleksi", href: "#koleksi", testId: "nav-link-koleksi" },
-  { label: "Cerita Kami", href: "#cerita", testId: "nav-link-cerita" },
-  { label: "Nilai", href: "#nilai", testId: "nav-link-nilai" },
-  { label: "Kontak", href: "#kontak", testId: "nav-link-kontak" },
+  { label: "Tentang Kami", href: "#cerita", testId: "nav-link-tentang-kami" },
+  { label: "Cara Pesan", href: "#handmade", testId: "nav-link-cara-pesan" },
+  { label: "FAQ", href: "#inquiry-section", testId: "nav-link-faq" },
 ];
 
 type Product = {
@@ -94,8 +95,8 @@ const products: Product[] = [
     description:
       "Untuk momen spesial, jamuan, atau hadiah berkelas yang ingin membawa sepotong Yogyakarta lebih jauh.",
     motif: "Batik klasik · Hardware kuningan",
-    image: ASSETS.greenUmbrella,
-    align: "object-[52%_52%]",
+    image: ASSETS.hero,
+    align: "object-[82%_52%]",
   },
   {
     id: "clutch",
@@ -106,7 +107,7 @@ const products: Product[] = [
     description:
       "Genggaman mungil yang merayakan detail: tekstur kain, garis jahit, dan warna yang dipilih dengan penuh rasa.",
     motif: "Nitik & Truntum · Finishing presisi",
-    image: ASSETS.umbrella,
+    image: ASSETS.stockBag,
     align: "object-[50%_54%]",
   },
 ];
@@ -146,13 +147,14 @@ function WhatsAppButton({
   href: string;
   children: ReactNode;
   testId: string;
-  variant?: "dark" | "green" | "light";
+  variant?: "dark" | "green" | "light" | "maroon";
   className?: string;
 }) {
   const variants = {
     dark: "wa-button wa-button-dark",
     green: "wa-button wa-button-green",
     light: "wa-button wa-button-light",
+    maroon: "wa-button wa-button-maroon",
   };
 
   return (
@@ -196,12 +198,17 @@ export default function Home() {
             ))}
           </nav>
 
+          <div className="nav-socials" data-testid="nav-social-links">
+            <a href="https://www.instagram.com/batika_bag/" target="_blank" rel="noreferrer" aria-label="Instagram Batika" data-testid="nav-instagram-link"><Instagram size={17} /></a>
+            <a href="https://www.tiktok.com/@batikabag" target="_blank" rel="noreferrer" aria-label="TikTok Batika" data-testid="nav-tiktok-link"><Music2 size={17} /></a>
+          </div>
+
           <WhatsAppButton
             href={whatsappUrl(
               "Halo Batika Indonesia, saya tertarik dengan koleksi tas batik eksklusif Anda. Boleh info katalog lengkap dan harganya?",
             )}
             testId="nav-cta-whatsapp-button"
-            variant="dark"
+            variant="green"
             className="nav-cta"
           >
             Tanya via WhatsApp
@@ -246,14 +253,14 @@ export default function Home() {
       <section id="top" className="hero-section" data-testid="hero-section">
         <div className="hero-pattern" aria-hidden="true" />
         <div className="hero-copy">
-          <SectionLabel testId="hero-eyebrow">Pusat Tas Batik Eksklusif · Est. 2018</SectionLabel>
+          <SectionLabel testId="hero-eyebrow">Pusat Tas Batik Eksklusif</SectionLabel>
           <h1 data-testid="hero-headline">
-            Warisan yang
-            <span> dibawa maju.</span>
+            Tas Batik Handmade
+            <span>dari Yogyakarta</span>
           </h1>
           <p className="hero-description" data-testid="hero-description">
-            Tas batik handmade dari Yogyakarta, tempat motif klasik Nusantara bertemu
-            dengan siluet modern dan kulit pilihan.
+            Karya tangan penuh makna, dengan motif batik autentik yang memadukan tradisi
+            dan gaya modern. Dukung produk lokal, bawa budaya Indonesia ke setiap langkahmu.
           </p>
           <div className="hero-actions">
             <WhatsAppButton
@@ -261,27 +268,21 @@ export default function Home() {
                 "Halo Batika Indonesia, saya tertarik memesan tas batik eksklusif. Mohon info ketersediaan varian saat ini.",
               )}
               testId="hero-primary-whatsapp-button"
-              variant="green"
+              variant="maroon"
             >
-              Konsultasi & Pesan
+              Chat via WhatsApp
             </WhatsAppButton>
-            <a href="#koleksi" className="text-link" data-testid="hero-explore-collection-button">
-              Jelajahi koleksi <ArrowDown size={16} />
-            </a>
+            <div className="hero-socials" data-testid="hero-social-links">
+              <a href="https://www.instagram.com/batika_bag/" target="_blank" rel="noreferrer" data-testid="hero-instagram-link"><Instagram size={17} /> @batika_bag</a>
+              <a href="https://www.tiktok.com/@batikabag" target="_blank" rel="noreferrer" data-testid="hero-tiktok-link"><Music2 size={17} /> @batikabag</a>
+            </div>
           </div>
-          <div className="hero-proof" data-testid="hero-proof-points">
-            <div>
-              <strong data-testid="hero-proof-handmade">100%</strong>
-              <span data-testid="hero-proof-handmade-label">proses handmade</span>
-            </div>
-            <div>
-              <strong data-testid="hero-proof-year">2018</strong>
-              <span data-testid="hero-proof-year-label">berkarya di Yogya</span>
-            </div>
-            <div>
-              <strong data-testid="hero-proof-artisan">Muda</strong>
-              <span data-testid="hero-proof-artisan-label">regenerasi perajin</span>
-            </div>
+          <a href="#koleksi" className="text-link hero-collection-link" data-testid="hero-explore-collection-button">
+            Lihat koleksi <ArrowDown size={16} />
+          </a>
+          <div className="hero-regeneration" data-testid="hero-regeneration-note">
+            <Sparkles size={20} aria-hidden="true" />
+            <span data-testid="hero-regeneration-text">Penggerak regenerasi pembatik muda</span>
           </div>
         </div>
         <div className="hero-visual" data-testid="hero-visual">
@@ -313,13 +314,13 @@ export default function Home() {
           <div>
             <SectionLabel testId="collection-eyebrow">Koleksi utama</SectionLabel>
             <h2 data-testid="collection-headline">
-              Empat cara untuk
-              <em> membawa cerita.</em>
+              Ragam Tas Batik
+              <em> untuk Setiap Momen</em>
             </h2>
           </div>
           <p data-testid="collection-description">
-            Satu tas, satu karakter. Pilih siluet yang paling dekat dengan keseharianmu,
-            lalu biarkan kami membantu menemukan motif yang terasa paling kamu.
+            Dari aktivitas harian hingga acara spesial, temukan tas batik yang paling sesuai
+            dengan gaya dan kebutuhanmu.
           </p>
         </div>
 
@@ -473,7 +474,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="inquiry-section section-pad" data-testid="inquiry-section">
+      <section id="inquiry-section" className="inquiry-section section-pad" data-testid="inquiry-section">
         <div className="inquiry-intro">
           <SectionLabel testId="inquiry-eyebrow">Made for you</SectionLabel>
           <h2 data-testid="inquiry-headline">Mulai dari sebuah
