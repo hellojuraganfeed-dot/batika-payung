@@ -1,29 +1,46 @@
-# Batika Indonesia Landing Page
+# Batika Indonesia — Payung Batik Landing Page
 
-## What it does
+## Tujuan
 
-Single-page, conversion-focused brand landing page for Batika Indonesia, a Yogyakarta small business making handmade batik and leather bags. The page is static on purpose: product prices are not claimed and every purchase or catalogue inquiry goes to WhatsApp.
+One-page mobile-first yang menggantikan halaman tas sebelumnya dan berfokus mengubah pengunjung menjadi percakapan WhatsApp untuk Payung Batik Handmade Jumbo Batika. Halaman bukan e-commerce: tidak ada cart, checkout, akun, atau harga yang diklaim.
 
-## Key flows
+## Produk dan klaim
 
-- Visitor lands on the editorial hero and can open a contextual WhatsApp chat or jump to the collection.
-- Visitor browses four generic categories: Tas Selempang, Tote Bag, Handbag, and Clutch. Each has a contextual WhatsApp inquiry link and “Tanya harga via WhatsApp” copy.
-- Visitor reads Our History, Our Value, young artisan regeneration, and handmade process sections.
-- Visitor can choose a bag category, motif, and leather colour in the inquiry selector; the selection is encoded into the WhatsApp message.
-- Visitor can contact the brand through floating WhatsApp, contact details, Instagram, TikTok, Facebook, Tokopedia, and Shopee.
+- Produk: Payung Batik Handmade Jumbo — Anti UV, Lipat Otomatis
+- Material: kain waterproof, rangka aluminium, lapisan anti UV
+- Diameter terbuka: 110 cm
+- Panjang dilipat: 28 cm
+- Panjang ditarik: 58 cm
+- Sistem: lipat 3, otomatis buka–tutup satu tombol
+- Jari-jari: 12
+- Sistem pemesanan: pre-order, estimasi proses pengerjaan dan pengiriman ± 20 hari
+- CTA tunggal: WhatsApp +62 858-0028-8414 dengan pesan yang sama di seluruh halaman
 
-## Data model and backend
+## Alur utama
 
-No application data model or auth is required for this static landing page. The template FastAPI status routes remain available but are not used by the page.
+1. Hero menjelaskan manfaat utama dan langsung menawarkan CTA WhatsApp.
+2. Problem/solution membandingkan kendala payung biasa dengan manfaat Batika.
+3. Spesifikasi dan galeri menggunakan foto yang diekstrak dari PDF pengguna.
+4. Bagian pre-order menjelaskan estimasi 20 hari dan empat tahap pemesanan.
+5. Cerita brand, nilai lokal, handmade, dan regenerasi pembatik membangun kepercayaan.
+6. Social proof menampilkan kanal resmi dan placeholder testimoni yang jelas sampai testimoni terverifikasi tersedia.
+7. FAQ mengarahkan kebijakan custom, pembayaran, dan COD untuk dikonfirmasi melalui WhatsApp.
+8. CTA akhir, footer, dan tombol mengambang kembali membuka WhatsApp.
 
-## Brand facts
+## Identitas dan kontak
 
-- Founded: 2018
-- Location: Gg. Santan 1 No. 10c, Maguwoharjo, Depok, Sleman, Yogyakarta 55282
-- Email: butikbareng@gmail.com
-- WhatsApp: +6285800288414
-- Mission/value: Penggerak regenerasi pembatik muda
+- Brand: Batika, berdiri 2018 di Yogyakarta
+- Logo: `/payung/batika-logo.webp` dari file asli pengguna
+- Alamat: Jl. Matraman No. 4-24, Nanggulan, Maguwoharjo, Depok, Sleman
+- Maps: https://maps.app.goo.gl/MxkztRoyuiWoDqhRA
+- Email: batikabagindonesia@gmail.com
+- WhatsApp: +62 858-0028-8414
+- Instagram: @batika_bag
+- TikTok: @batikabag
+- Facebook: BatikaBag
+- Tokopedia: batikaindonesia
+- Shopee: batikabag
 
-## Visual system
+## Visual
 
-Editorial craft luxury inspired by the approved reference: warm ivory canvas, deep navy headline, maroon hero CTA, green WhatsApp actions, and a wide full-bleed hero image of the supplied Batika collection. The opening collection section uses a left editorial introduction beside four compact horizontal product cards. Typography remains Lora headings, Plus Jakarta Sans body, and IBM Plex Mono labels; kawung-inspired motif accents frame the hero without competing with the product photography. The page uses supplied Batika product assets plus a curated artisan image for the story section.
+Butik lokal premium, heritage meets modern. Palet utama warm ivory, sogan brown, muted gold, dengan indigo untuk CTA akhir. Heading memakai Lora yang senada dengan logo; body memakai Plus Jakarta Sans. Motif kawung beropacity rendah menjadi tekstur. Semua 14 gambar varian payung hasil ekstraksi PDF disimpan teroptimasi di `frontend/public/payung/`; enam varian dipakai pada halaman utama.

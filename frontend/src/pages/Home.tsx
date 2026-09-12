@@ -1,573 +1,451 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import {
-  ArrowDown,
-  ArrowUpRight,
-  Check,
-  ChevronRight,
+  ArrowRight,
+  BadgeCheck,
+  ChevronDown,
+  CircleCheck,
+  Clock3,
+  Droplets,
   Facebook,
-  Globe2,
-  Handshake,
+  Gift,
+  HandHeart,
   Instagram,
   Mail,
   MapPin,
   Menu,
   MessageCircle,
   Music2,
+  PackageCheck,
+  Palette,
   Phone,
-  Scissors,
+  Ruler,
+  ShieldCheck,
   Sparkles,
+  Store,
+  Sun,
+  Umbrella,
   X,
 } from "lucide-react";
-const ASSETS = {
-  hero:
-    "https://customer-assets-lqy194kg.emergentagent.net/job_6bed0943-17d5-452f-912e-2c35378d24d9/artifacts/hf88muwl_hero%20img%20Batika.webp",
-  bag:
-    "https://customer-assets-lqy194kg.emergentagent.net/job_6bed0943-17d5-452f-912e-2c35378d24d9/artifacts/m8f4b9nf_Tas%20Batika.webp",
-  umbrella:
-    "https://customer-assets-lqy194kg.emergentagent.net/job_6bed0943-17d5-452f-912e-2c35378d24d9/artifacts/ky8gassb_Payung%20Batik%20Handmade%20Reguler.webp",
-  greenUmbrella:
-    "https://customer-assets-lqy194kg.emergentagent.net/job_6bed0943-17d5-452f-912e-2c35378d24d9/artifacts/su0tpnzj_Payung%20Batik%20Handmade%20Reguler%20-%20hijau.webp",
-  logo:
-    "https://customer-assets-lqy194kg.emergentagent.net/job_6bed0943-17d5-452f-912e-2c35378d24d9/artifacts/6o9j49z6_Logo%20Batika.jpg",
-  artisan:
-    "https://images.unsplash.com/photo-1586319826907-1ff4aadbaddc?auto=format&fit=crop&w=1200&q=85",
-  stockBag:
-    "https://images.unsplash.com/photo-1591548244205-3c9b9ad258f6?auto=format&fit=crop&w=900&q=85",
-};
 
-const WHATSAPP_NUMBER = "6285800288414";
+const WHATSAPP_URL =
+  "https://wa.me/6285800288414?text=Halo%20Batika%2C%20saya%20tertarik%20dengan%20Payung%20Batik%20Handmade%20Jumbo%20Anti%20UV.%20Boleh%20info%20lebih%20lanjut%3F";
 
-const whatsappUrl = (message: string) =>
-  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+const LOGO = "/payung/batika-logo.webp";
+
+const gallery = [
+  { src: "/payung/payung-01.webp", label: "Nila Peksi", tone: "Indigo & soga" },
+  { src: "/payung/payung-02.webp", label: "Sekar Hijau", tone: "Hijau & perunggu" },
+  { src: "/payung/payung-04.webp", label: "Kupu Malam", tone: "Hitam multikolor" },
+  { src: "/payung/payung-05.webp", label: "Sekar Maroon", tone: "Maroon & merah muda" },
+  { src: "/payung/payung-06.webp", label: "Kembang Alas", tone: "Hijau & emas" },
+  { src: "/payung/payung-14.webp", label: "Peksi Langit", tone: "Biru muda & merah" },
+];
 
 const navItems = [
-  { label: "Beranda", href: "#top", testId: "nav-link-beranda" },
-  { label: "Koleksi", href: "#koleksi", testId: "nav-link-koleksi" },
-  { label: "Tentang Kami", href: "#cerita", testId: "nav-link-tentang-kami" },
-  { label: "Cara Pesan", href: "#handmade", testId: "nav-link-cara-pesan" },
-  { label: "FAQ", href: "#inquiry-section", testId: "nav-link-faq" },
+  { label: "Produk", href: "#produk", id: "nav-produk-link" },
+  { label: "Cara Pesan", href: "#preorder", id: "nav-cara-pesan-link" },
+  { label: "Cerita Kami", href: "#cerita", id: "nav-cerita-link" },
+  { label: "Kontak", href: "#kontak", id: "nav-kontak-link" },
 ];
 
-type Product = {
-  id: string;
-  number: string;
-  category: string;
-  name: string;
-  line: string;
-  description: string;
-  motif: string;
-  image: string;
-  align?: string;
-};
+const heroFeatures = [
+  { label: "Handmade", icon: Sparkles, id: "handmade" },
+  { label: "Anti UV", icon: Sun, id: "anti-uv" },
+  { label: "Buka–tutup otomatis", icon: Umbrella, id: "otomatis" },
+  { label: "Diameter 110 cm", icon: Ruler, id: "diameter" },
+];
 
-const products: Product[] = [
+const faqs = [
   {
-    id: "tas-selempang",
-    number: "01",
-    category: "Tas Selempang",
-    name: "Siluet yang menemani langkah",
-    line: "Ringkas, anggun, nyaman untuk aktivitas harian.",
-    description:
-      "Struktur yang praktis dengan strap kulit fleksibel dan aksen batik yang membuat setiap perjalanan terasa personal.",
-    motif: "Aksen Parang · Kulit soga",
-    image: ASSETS.bag,
-    align: "object-[50%_56%]",
+    question: "Berapa lama proses pengerjaan payung?",
+    answer:
+      "Estimasi proses pengerjaan dan pengiriman adalah sekitar 20 hari, mengikuti antrean pre-order. Tim Batika akan mengonfirmasi estimasi terbaru melalui WhatsApp sebelum pesanan diproses.",
   },
   {
-    id: "tote-bag",
-    number: "02",
-    category: "Tote Bag",
-    name: "Ruang luas, karakter kuat",
-    line: "Kapasitas maksimal dengan struktur kokoh.",
-    description:
-      "Teman kerja dan bepergian yang lapang, dengan permainan kain batik sebagai pusat perhatian.",
-    motif: "Kawung geometris · Handle kulit",
-    image: ASSETS.hero,
-    align: "object-[60%_48%]",
+    question: "Apakah bisa memilih atau custom motif?",
+    answer:
+      "Pilihan motif mengikuti kain batik dan batch yang tersedia. Untuk permintaan motif khusus, silakan konsultasikan melalui WhatsApp agar tim Batika dapat mengecek kemungkinan dan antrean pengerjaannya.",
   },
   {
-    id: "handbag",
-    number: "03",
-    category: "Handbag",
-    name: "Warisan dalam siluet modern",
-    line: "Pernyataan kemewahan budaya yang abadi.",
-    description:
-      "Untuk momen spesial, jamuan, atau hadiah berkelas yang ingin membawa sepotong Yogyakarta lebih jauh.",
-    motif: "Batik klasik · Hardware kuningan",
-    image: ASSETS.hero,
-    align: "object-[82%_52%]",
+    question: "Bagaimana cara pembayarannya?",
+    answer:
+      "Metode dan tahapan pembayaran akan diinformasikan langsung oleh admin Batika melalui WhatsApp agar sesuai dengan pesanan dan batch pre-order Anda.",
   },
   {
-    id: "clutch",
-    number: "04",
-    category: "Clutch",
-    name: "Kecil, namun tak terlupakan",
-    line: "Detail ramping untuk momen berharga.",
-    description:
-      "Genggaman mungil yang merayakan detail: tekstur kain, garis jahit, dan warna yang dipilih dengan penuh rasa.",
-    motif: "Nitik & Truntum · Finishing presisi",
-    image: ASSETS.stockBag,
-    align: "object-[50%_54%]",
+    question: "Apakah bisa COD atau dikirim ke luar kota?",
+    answer:
+      "Pengiriman luar kota dapat dikonsultasikan dengan tim Batika. Untuk ketersediaan COD dan biaya kirim ke alamat Anda, silakan konfirmasi langsung melalui WhatsApp.",
+  },
+  {
+    question: "Apakah motif setiap payung persis sama?",
+    answer:
+      "Karena memakai kain batik dan dikerjakan secara handmade, penempatan detail motif dapat berbeda pada setiap payung. Perbedaan kecil ini membuat setiap karya terasa lebih personal.",
   },
 ];
 
-function SectionLabel({ children, testId }: { children: ReactNode; testId: string }) {
+function useRevealOnScroll() {
+  useEffect(() => {
+    const items = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      items.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 },
+    );
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
+}
+
+function BatikPattern({ className = "" }: { className?: string }) {
+  return <span aria-hidden="true" className={`batik-pattern ${className}`} />;
+}
+
+function Eyebrow({ children, testId }: { children: ReactNode; testId: string }) {
   return (
-    <p data-testid={testId} className="eyebrow">
+    <p className="eyebrow" data-testid={testId}>
+      <span aria-hidden="true" />
       {children}
     </p>
   );
 }
 
-function MotifMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      className={`motif-mark ${className}`}
-      viewBox="0 0 180 180"
-      fill="none"
-    >
-      <circle cx="90" cy="90" r="34" />
-      <circle cx="38" cy="90" r="34" />
-      <circle cx="142" cy="90" r="34" />
-      <circle cx="90" cy="38" r="34" />
-      <circle cx="90" cy="142" r="34" />
-    </svg>
-  );
-}
-
-function WhatsAppButton({
-  href,
+function WhatsAppCta({
   children,
   testId,
-  variant = "dark",
-  className = "",
+  kind = "primary",
 }: {
-  href: string;
   children: ReactNode;
   testId: string;
-  variant?: "dark" | "green" | "light" | "maroon";
-  className?: string;
+  kind?: "primary" | "light" | "outline";
 }) {
-  const variants = {
-    dark: "wa-button wa-button-dark",
-    green: "wa-button wa-button-green",
-    light: "wa-button wa-button-light",
-    maroon: "wa-button wa-button-maroon",
-  };
-
   return (
     <a
-      href={href}
+      className={`whatsapp-cta whatsapp-cta-${kind}`}
+      href={WHATSAPP_URL}
       target="_blank"
       rel="noreferrer"
       data-testid={testId}
-      className={`${variants[variant]} ${className}`}
     >
-      <MessageCircle size={17} strokeWidth={2.2} aria-hidden="true" />
+      <MessageCircle size={19} strokeWidth={2.1} aria-hidden="true" />
       <span>{children}</span>
-      <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
+      <ArrowRight size={17} aria-hidden="true" />
     </a>
   );
 }
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("Tas Selempang");
-  const [selectedMotif, setSelectedMotif] = useState("Kawung");
-  const [selectedColor, setSelectedColor] = useState("Soga Brown");
-
-  const inquiryMessage = `Halo Batika Indonesia, saya tertarik dengan ${selectedCategory} motif ${selectedMotif} dalam warna kulit ${selectedColor}. Boleh info ketersediaan, detail, dan harganya?`;
+  useRevealOnScroll();
 
   return (
-    <main className="site-shell">
-      <header className="site-nav" data-testid="site-navigation">
-        <div className="nav-inner">
-          <a href="#top" className="brand-lockup" data-testid="brand-logo-link">
-            <span className="brand-mark">B</span>
-            <span className="brand-wordmark">Batika</span>
-            <span className="brand-origin">Indonesia</span>
+    <main className="umbrella-site">
+      <header className="topbar" data-testid="navbar">
+        <div className="topbar-inner">
+          <a href="#beranda" className="brand-link" data-testid="navbar-logo-link" aria-label="Batika, kembali ke beranda">
+            <img src={LOGO} alt="Batika" data-testid="navbar-logo-image" />
           </a>
-
-          <nav className="desktop-nav" aria-label="Navigasi utama">
+          <nav className="desktop-menu" aria-label="Navigasi utama" data-testid="desktop-navigation">
             {navItems.map((item) => (
-              <a key={item.href} href={item.href} data-testid={item.testId}>
-                {item.label}
-              </a>
+              <a key={item.href} href={item.href} data-testid={item.id}>{item.label}</a>
             ))}
           </nav>
-
-          <div className="nav-socials" data-testid="nav-social-links">
-            <a href="https://www.instagram.com/batika_bag/" target="_blank" rel="noreferrer" aria-label="Instagram Batika" data-testid="nav-instagram-link"><Instagram size={17} /></a>
-            <a href="https://www.tiktok.com/@batikabag" target="_blank" rel="noreferrer" aria-label="TikTok Batika" data-testid="nav-tiktok-link"><Music2 size={17} /></a>
-          </div>
-
-          <WhatsAppButton
-            href={whatsappUrl(
-              "Halo Batika Indonesia, saya tertarik dengan koleksi tas batik eksklusif Anda. Boleh info katalog lengkap dan harganya?",
-            )}
-            testId="nav-cta-whatsapp-button"
-            variant="green"
-            className="nav-cta"
-          >
-            Tanya via WhatsApp
-          </WhatsAppButton>
-
+          <WhatsAppCta testId="navbar-whatsapp-button">Pesan Sekarang</WhatsAppCta>
           <button
             type="button"
-            className="menu-toggle"
-            aria-label={menuOpen ? "Tutup menu" : "Buka menu"}
-            aria-expanded={menuOpen}
+            className="mobile-menu-button"
             onClick={() => setMenuOpen((open) => !open)}
-            data-testid="mobile-menu-toggle-button"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Tutup menu" : "Buka menu"}
+            data-testid="mobile-menu-button"
           >
-            {menuOpen ? <X size={21} /> : <Menu size={21} />}
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-
         {menuOpen && (
-          <div className="mobile-menu" data-testid="mobile-navigation-menu">
+          <nav className="mobile-menu-panel" aria-label="Navigasi mobile" data-testid="mobile-navigation">
             {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                data-testid={`mobile-${item.testId}`}
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.label}
-                <ChevronRight size={16} />
+              <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)} data-testid={`mobile-${item.id}`}>
+                <span>{item.label}</span><ArrowRight size={16} />
               </a>
             ))}
-            <WhatsAppButton
-              href={whatsappUrl("Halo Batika Indonesia, saya ingin melihat koleksi tas batik eksklusif.")}
-              testId="mobile-nav-cta-whatsapp-button"
-              variant="green"
-            >
-              Mulai percakapan
-            </WhatsAppButton>
-          </div>
+            <WhatsAppCta testId="mobile-navbar-whatsapp-button">Pesan via WhatsApp</WhatsAppCta>
+          </nav>
         )}
       </header>
 
-      <section id="top" className="hero-section" data-testid="hero-section">
-        <div className="hero-pattern" aria-hidden="true" />
-        <div className="hero-copy">
-          <SectionLabel testId="hero-eyebrow">Pusat Tas Batik Eksklusif</SectionLabel>
+      <section id="beranda" className="umbrella-hero" data-testid="hero-section">
+        <BatikPattern className="hero-pattern-one" />
+        <div className="hero-content" data-reveal>
+          <Eyebrow testId="hero-eyebrow">Kriya Batik Yogyakarta · Sejak 2018</Eyebrow>
           <h1 data-testid="hero-headline">
-            Tas Batik Handmade
-            <span>dari Yogyakarta</span>
+            Payung Batik Eksklusif,
+            <em> Anti UV & Otomatis</em>
           </h1>
-          <p className="hero-description" data-testid="hero-description">
-            Karya tangan penuh makna, dengan motif batik autentik yang memadukan tradisi
-            dan gaya modern. Dukung produk lokal, bawa budaya Indonesia ke setiap langkahmu.
+          <p className="hero-subheadline" data-testid="hero-subheadline">
+            Payung lipat jumbo berdiameter 110 cm dengan material waterproof dan perlindungan anti UV—karya tangan pembatik Yogyakarta untuk gaya harian maupun hadiah penuh makna.
           </p>
+          <div className="hero-badges" data-testid="hero-feature-badges">
+            {heroFeatures.map(({ label, icon: Icon, id }) => (
+              <span key={id} data-testid={`hero-badge-${id}`}>
+                <Icon size={14} aria-hidden="true" /> {label}
+              </span>
+            ))}
+          </div>
           <div className="hero-actions">
-            <WhatsAppButton
-              href={whatsappUrl(
-                "Halo Batika Indonesia, saya tertarik memesan tas batik eksklusif. Mohon info ketersediaan varian saat ini.",
-              )}
-              testId="hero-primary-whatsapp-button"
-              variant="maroon"
-            >
-              Chat via WhatsApp
-            </WhatsAppButton>
-            <div className="hero-socials" data-testid="hero-social-links">
-              <a href="https://www.instagram.com/batika_bag/" target="_blank" rel="noreferrer" data-testid="hero-instagram-link"><Instagram size={17} /> @batika_bag</a>
-              <a href="https://www.tiktok.com/@batikabag" target="_blank" rel="noreferrer" data-testid="hero-tiktok-link"><Music2 size={17} /> @batikabag</a>
-            </div>
+            <WhatsAppCta testId="hero-whatsapp-button">Pesan via WhatsApp</WhatsAppCta>
+            <a href="#produk" className="secondary-link" data-testid="hero-detail-link">
+              Lihat detail produk <ArrowRight size={16} />
+            </a>
           </div>
-          <a href="#koleksi" className="text-link hero-collection-link" data-testid="hero-explore-collection-button">
-            Lihat koleksi <ArrowDown size={16} />
-          </a>
-          <div className="hero-regeneration" data-testid="hero-regeneration-note">
-            <Sparkles size={20} aria-hidden="true" />
-            <span data-testid="hero-regeneration-text">Penggerak regenerasi pembatik muda</span>
-          </div>
-        </div>
-        <div className="hero-visual" data-testid="hero-visual">
-          <div className="hero-image-wrap">
-            <img src={ASSETS.hero} alt="Koleksi tas batik Batika dalam berbagai siluet" data-testid="hero-product-image" />
-            <div className="hero-image-wash" />
-            <div className="hero-stamp" data-testid="hero-stamp">
-              <MotifMark />
-              <span>dibuat dengan rasa</span>
-            </div>
-          </div>
-          <p className="hero-caption" data-testid="hero-image-caption">
-            <span>Yogyakarta, Indonesia</span>
-            <span>—</span>
-            <span>Kerajinan yang punya cerita</span>
+          <p className="hero-note" data-testid="hero-preorder-note">
+            <Clock3 size={15} aria-hidden="true" /> Sistem pre-order · estimasi ± 20 hari
           </p>
+        </div>
+        <div className="hero-product" data-reveal data-testid="hero-product-visual">
+          <div className="hero-orbit" aria-hidden="true" />
+          <span className="hero-edition" data-testid="hero-edition-label">01 · Nila Peksi</span>
+          <img src="/payung/payung-01.webp" alt="Payung Batik Handmade Jumbo motif indigo dan soga dalam posisi terbuka" fetchPriority="high" data-testid="hero-product-image" />
+          <div className="hero-size-note" data-testid="hero-size-note">
+            <strong>110</strong><span>cm<br />diameter</span>
+          </div>
         </div>
       </section>
 
-      <div className="marquee-band" aria-hidden="true">
-        <div className="marquee-track">
-          <span>BATIK · KULIT · CERITA</span><i>✳</i><span>DIBUAT DI YOGYAKARTA</span><i>✳</i>
-          <span>BATIK · KULIT · CERITA</span><i>✳</i><span>DIBUAT DI YOGYAKARTA</span><i>✳</i>
-        </div>
-      </div>
+      <section className="trust-ribbon" aria-label="Keunggulan utama" data-testid="trust-ribbon">
+        <span data-testid="trust-ribbon-handmade">Handmade Yogyakarta</span>
+        <i aria-hidden="true">✦</i>
+        <span data-testid="trust-ribbon-waterproof">Waterproof Premium</span>
+        <i aria-hidden="true">✦</i>
+        <span data-testid="trust-ribbon-uv">Perlindungan Anti UV</span>
+        <i aria-hidden="true">✦</i>
+        <span data-testid="trust-ribbon-preorder">Dibuat Khusus via Pre-Order</span>
+      </section>
 
-      <section id="koleksi" className="collection-section section-pad" data-testid="collection-section">
-        <div className="section-intro collection-intro">
-          <div>
-            <SectionLabel testId="collection-eyebrow">Koleksi utama</SectionLabel>
-            <h2 data-testid="collection-headline">
-              Ragam Tas Batik
-              <em> untuk Setiap Momen</em>
-            </h2>
+      <section className="problem-section section-shell" data-testid="problem-solution-section">
+        <div className="problem-heading" data-reveal>
+          <Eyebrow testId="problem-eyebrow">Lebih dari sekadar pelindung cuaca</Eyebrow>
+          <h2 data-testid="problem-heading">Payung biasa melindungi.<br /><em>Batika bercerita.</em></h2>
+          <p data-testid="problem-description">Tiga detail yang membuat payung ini layak menemani lebih banyak perjalanan.</p>
+        </div>
+        <div className="solution-grid">
+          <article data-reveal className="solution-card" data-testid="solution-card-waterproof">
+            <span className="solution-number" data-testid="solution-number-waterproof">01</span>
+            <Droplets size={27} aria-hidden="true" />
+            <p className="problem-copy" data-testid="problem-copy-waterproof">Payung biasa mudah bocor saat hujan deras.</p>
+            <h3 data-testid="solution-title-waterproof">Waterproof premium</h3>
+            <p data-testid="solution-copy-waterproof">Kain pilihan membantu air meluncur turun, menjaga Anda tetap nyaman saat hujan datang.</p>
+          </article>
+          <article data-reveal className="solution-card featured" data-testid="solution-card-uv">
+            <span className="solution-number" data-testid="solution-number-uv">02</span>
+            <ShieldCheck size={27} aria-hidden="true" />
+            <p className="problem-copy" data-testid="problem-copy-uv">Panas siang membuat perjalanan kurang nyaman.</p>
+            <h3 data-testid="solution-title-uv">Lapisan anti UV</h3>
+            <p data-testid="solution-copy-uv">Memberi perlindungan tambahan dari paparan sinar matahari dalam aktivitas harian.</p>
+          </article>
+          <article data-reveal className="solution-card" data-testid="solution-card-pattern">
+            <span className="solution-number" data-testid="solution-number-pattern">03</span>
+            <Palette size={27} aria-hidden="true" />
+            <p className="problem-copy" data-testid="problem-copy-pattern">Payung pasaran mudah terlihat sama.</p>
+            <h3 data-testid="solution-title-pattern">Motif penuh karakter</h3>
+            <p data-testid="solution-copy-pattern">Ragam batik yang ekspresif membuat payung Anda terasa personal dan berkelas.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="produk" className="spec-section" data-testid="product-specification-section">
+        <BatikPattern className="spec-pattern" />
+        <div className="section-shell spec-inner">
+          <div className="spec-gallery" data-reveal>
+            <div className="spec-main-image">
+              <img src="/payung/payung-02.webp" alt="Payung batik jumbo warna hijau dengan motif burung dan bunga" loading="lazy" data-testid="spec-main-image" />
+              <span data-testid="spec-image-caption">Detail motif · Sekar Hijau</span>
+            </div>
+            <div className="spec-mini-image">
+              <img src="/payung/payung-05.webp" alt="Payung batik jumbo motif maroon" loading="lazy" data-testid="spec-secondary-image" />
+            </div>
           </div>
-          <p data-testid="collection-description">
-            Dari aktivitas harian hingga acara spesial, temukan tas batik yang paling sesuai
-            dengan gaya dan kebutuhanmu.
-          </p>
+          <div className="spec-copy" data-reveal>
+            <Eyebrow testId="spec-eyebrow">Detail yang dibuat untuk diandalkan</Eyebrow>
+            <h2 data-testid="spec-heading">Spesifikasi Payung Batik Jumbo</h2>
+            <p data-testid="spec-description">Dimensi lega, mekanisme praktis, dan detail yang dipilih untuk aktivitas sehari-hari.</p>
+            <dl className="spec-list" data-testid="spec-list">
+              <div data-testid="spec-material"><dt><Droplets size={18} /> Material</dt><dd>Kain waterproof, rangka aluminium + lapisan anti UV</dd></div>
+              <div data-testid="spec-diameter"><dt><Ruler size={18} /> Diameter</dt><dd>110 cm</dd></div>
+              <div data-testid="spec-folded-length"><dt><PackageCheck size={18} /> Panjang dilipat</dt><dd>28 cm</dd></div>
+              <div data-testid="spec-open-length"><dt><Umbrella size={18} /> Panjang ditarik</dt><dd>58 cm</dd></div>
+              <div data-testid="spec-fold-system"><dt><CircleCheck size={18} /> Sistem lipat</dt><dd>Lipat 3, otomatis buka–tutup satu tombol</dd></div>
+              <div data-testid="spec-ribs"><dt><Sparkles size={18} /> Jari-jari</dt><dd>12 jari-jari payung</dd></div>
+            </dl>
+            <WhatsAppCta testId="spec-whatsapp-button">Tanyakan Ketersediaan Motif</WhatsAppCta>
+          </div>
         </div>
+      </section>
 
-        <div className="product-grid">
-          {products.map((product, index) => (
-            <article
-              className={`product-card product-card-${index + 1}`}
-              key={product.id}
-              data-testid={`product-card-${product.id}`}
-            >
-              <div className="product-image-frame">
-                <img
-                  src={product.image}
-                  alt={`${product.category} Batika dengan detail batik handmade`}
-                  className={product.align}
-                  data-testid={`product-image-${product.id}`}
-                />
-                <span className="product-number" data-testid={`product-number-${product.id}`}>
-                  {product.number}
-                </span>
-                <span className="product-motif" data-testid={`product-motif-${product.id}`}>
-                  {product.motif}
-                </span>
-              </div>
-              <div className="product-copy">
-                <p className="product-category" data-testid={`product-category-${product.id}`}>
-                  {product.category}
-                </p>
-                <h3 data-testid={`product-name-${product.id}`}>{product.name}</h3>
-                <p className="product-line" data-testid={`product-line-${product.id}`}>
-                  {product.line}
-                </p>
-                <p className="product-description" data-testid={`product-description-${product.id}`}>
-                  {product.description}
-                </p>
-                <div className="product-footer">
-                  <span data-testid={`product-price-label-${product.id}`}>Tanya harga via WhatsApp</span>
-                  <a
-                    href={whatsappUrl(
-                      `Halo Batika, saya tertarik dengan ${product.category} Batik. Boleh minta detail dan harganya?`,
-                    )}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="product-cta"
-                    data-testid={`product-cta-${product.id}`}
-                  >
-                    Tanya sekarang <ArrowUpRight size={16} />
-                  </a>
-                </div>
-              </div>
-            </article>
+      <section className="gallery-section section-shell" data-testid="gallery-section">
+        <div className="gallery-heading" data-reveal>
+          <div>
+            <Eyebrow testId="gallery-eyebrow">Ragam motif</Eyebrow>
+            <h2 data-testid="gallery-heading">Satu bentuk, banyak cerita.</h2>
+          </div>
+          <p data-testid="gallery-description">Motif tersedia mengikuti pilihan kain dan batch produksi. Tanyakan varian terbaru kepada admin.</p>
+        </div>
+        <div className="gallery-grid" data-testid="gallery-grid">
+          {gallery.map((item, index) => (
+            <figure key={item.src} className={`gallery-item gallery-item-${index + 1}`} data-reveal data-testid={`gallery-item-${index + 1}`}>
+              <img src={item.src} alt={`Payung Batika motif ${item.label} dengan nuansa ${item.tone}`} loading="lazy" data-testid={`gallery-image-${index + 1}`} />
+              <figcaption data-testid={`gallery-caption-${index + 1}`}>
+                <span>{item.label}</span><small>{item.tone}</small>
+              </figcaption>
+            </figure>
           ))}
         </div>
       </section>
 
-      <section id="cerita" className="story-section section-pad" data-testid="story-section">
-        <div className="story-visual">
-          <img src={ASSETS.artisan} alt="Perajin batik sedang bekerja dengan teliti" data-testid="story-artisan-image" />
-          <div className="story-image-label" data-testid="story-image-label">
-            <span>01</span>
-            <span>Our History</span>
+      <section id="preorder" className="preorder-section" data-testid="preorder-section">
+        <div className="section-shell preorder-inner">
+          <div className="preorder-intro" data-reveal>
+            <span className="preorder-badge" data-testid="preorder-badge"><Clock3 size={16} /> Dibuat sesuai antrean</span>
+            <Eyebrow testId="preorder-eyebrow">Sistem Pemesanan · Pre-Order</Eyebrow>
+            <h2 data-testid="preorder-heading">Kualitas handmade<br />memerlukan waktu.</h2>
+            <p data-testid="preorder-description">Setiap payung dikerjakan khusus untuk Anda, bukan produksi massal. Itulah mengapa kami memilih proses yang teliti daripada terburu-buru.</p>
+            <div className="preorder-estimate" data-testid="preorder-estimate"><strong>± 20 hari</strong><span>estimasi proses pengerjaan & pengiriman</span></div>
           </div>
-        </div>
-        <div className="story-copy">
-          <SectionLabel testId="story-eyebrow">Our history</SectionLabel>
-          <h2 data-testid="story-headline">
-            Dari Yogyakarta,
-            <em> untuk dunia.</em>
-          </h2>
-          <p data-testid="story-description">
-            Batika didirikan pada 2018 dengan satu gagasan sederhana: memadukan batik
-            dengan tas kulit untuk memberi apresiasi baru pada budaya Indonesia—elegan,
-            modern, dan tetap berakar.
-          </p>
-          <p data-testid="story-description-secondary">
-            Hari ini, setiap karya Batika lahir dari pertemuan antara tangan perajin lokal,
-            pilihan material yang jujur, dan keinginan untuk membuat warisan terasa relevan
-            dalam hidup sehari-hari.
-          </p>
-          <div className="story-signature" data-testid="story-signature">
-            <span className="signature-line" />
-            <span>Dibuat di Maguwoharjo, Yogyakarta</span>
+          <div className="preorder-card" data-reveal data-testid="preorder-process-card">
+            <h3 data-testid="preorder-process-heading">Dari pesan hingga sampai</h3>
+            <ol data-testid="preorder-steps">
+              <li data-testid="preorder-step-1"><span>01</span><div><strong>Hubungi Batika</strong><p>Konsultasikan motif dan detail pesanan via WhatsApp.</p></div></li>
+              <li data-testid="preorder-step-2"><span>02</span><div><strong>Konfirmasi pesanan</strong><p>Admin menginformasikan pilihan, pembayaran, dan estimasi batch.</p></div></li>
+              <li data-testid="preorder-step-3"><span>03</span><div><strong>Proses handmade</strong><p>Payung masuk antrean pengerjaan perajin Batika.</p></div></li>
+              <li data-testid="preorder-step-4"><span>04</span><div><strong>Dikirim untuk Anda</strong><p>Pesanan diperiksa dan dikirim setelah selesai.</p></div></li>
+            </ol>
+            <WhatsAppCta testId="preorder-whatsapp-button">Pesan Sekarang & Masuk Antrian</WhatsAppCta>
           </div>
         </div>
       </section>
 
-      <section id="nilai" className="values-section section-pad dark-section" data-testid="values-section">
-        <div className="values-pattern" aria-hidden="true"><MotifMark /></div>
-        <div className="section-intro values-intro">
-          <div>
-            <SectionLabel testId="values-eyebrow">Our value</SectionLabel>
-            <h2 data-testid="values-headline">
-              Bukan hanya tas.
-              <em> Ada yang kita teruskan.</em>
-            </h2>
-          </div>
-          <p data-testid="values-description">
-            Batika Indonesia berkolaborasi dengan artisan lokal Yogyakarta untuk membuat tas
-            batik berkualitas tinggi yang siap bersaing di pasar internasional.
-          </p>
+      <section id="cerita" className="story-section section-shell" data-testid="story-section">
+        <div className="story-photo" data-reveal>
+          <img src="https://images.unsplash.com/photo-1586319826907-1ff4aadbaddc?auto=format&fit=crop&w=1100&q=82" alt="Perajin batik bekerja dengan teliti" loading="lazy" data-testid="story-image" />
+          <span className="story-year" data-testid="story-year">Est. 2018 · Yogyakarta</span>
+          <small className="story-photo-note" data-testid="story-photo-note">Ilustrasi suasana membatik</small>
+        </div>
+        <div className="story-content" data-reveal>
+          <Eyebrow testId="story-eyebrow">Our history</Eyebrow>
+          <h2 data-testid="story-heading">Cerita Batika</h2>
+          <p className="story-lead" data-testid="story-lead">Warisan tidak cukup hanya disimpan. Ia perlu dipakai, dicintai, dan dibawa ke masa depan.</p>
+          <p data-testid="story-description">Batika didirikan pada 2018 dengan menggabungkan batik dan kerajinan kulit untuk menghadirkan apresiasi budaya Indonesia yang elegan dan modern. Dari Yogyakarta, kami terus mengeksplorasi cara baru agar batik hadir lebih dekat dalam keseharian.</p>
+          <div className="story-signature" data-testid="story-signature"><span aria-hidden="true" /> Karya lokal, rasa global</div>
+        </div>
+      </section>
+
+      <section className="values-section section-shell" data-testid="values-section">
+        <div className="values-header" data-reveal>
+          <Eyebrow testId="values-eyebrow">Our value</Eyebrow>
+          <h2 data-testid="values-heading">Nilai yang Kami Pegang</h2>
+          <p data-testid="values-description">Di balik setiap karya, ada tangan, waktu, dan masa depan yang kami jaga.</p>
         </div>
         <div className="values-grid">
-          <article className="value-card" data-testid="value-card-collaboration">
-            <Handshake size={25} strokeWidth={1.5} aria-hidden="true" />
-            <span className="value-index" data-testid="value-index-collaboration">01</span>
-            <h3 data-testid="value-title-collaboration">Kolaborasi lokal</h3>
-            <p data-testid="value-description-collaboration">
-              Merayakan keahlian perajin Yogyakarta dan memberi ruang bagi tangan-tangan terbaik untuk tumbuh bersama.
-            </p>
-          </article>
-          <article className="value-card value-card-accent" data-testid="value-card-regeneration">
-            <Sparkles size={25} strokeWidth={1.5} aria-hidden="true" />
-            <span className="value-index" data-testid="value-index-regeneration">02</span>
-            <h3 data-testid="value-title-regeneration">Penggerak regenerasi pembatik muda</h3>
-            <p data-testid="value-description-regeneration">
-              Batik bukan sekadar masa lalu. Kami menjaga teknik canting tetap hidup di tangan generasi baru.
-            </p>
-          </article>
-          <article className="value-card" data-testid="value-card-global">
-            <Globe2 size={25} strokeWidth={1.5} aria-hidden="true" />
-            <span className="value-index" data-testid="value-index-global">03</span>
-            <h3 data-testid="value-title-global">Siap melangkah lebih jauh</h3>
-            <p data-testid="value-description-global">
-              Ketelitian handmade dan material pilihan untuk karya yang pantas dibawa ke panggung dunia.
-            </p>
-          </article>
+          <article data-reveal data-testid="value-card-local"><HandHeart size={25} /><span data-testid="value-index-local">01</span><h3 data-testid="value-title-local">Kolaborasi Lokal</h3><p data-testid="value-copy-local">Berkolaborasi dengan pengrajin lokal Yogyakarta untuk menghasilkan karya batik berkualitas yang mampu bersaing di pasar internasional.</p></article>
+          <article data-reveal data-testid="value-card-handmade"><BadgeCheck size={25} /><span data-testid="value-index-handmade">02</span><h3 data-testid="value-title-handmade">Handmade</h3><p data-testid="value-copy-handmade">Setiap produk dibuat secara handmade dengan ketelitian dan kehati-hatian untuk memberikan kualitas terbaik.</p></article>
+          <article data-reveal data-testid="value-card-regeneration"><Sparkles size={25} /><span data-testid="value-index-regeneration">03</span><h3 data-testid="value-title-regeneration">Regenerasi Pembatik Muda</h3><p data-testid="value-copy-regeneration">Berkomitmen menjadi penggerak regenerasi pembatik muda agar warisan batik tetap hidup di generasi berikutnya.</p></article>
         </div>
       </section>
 
-      <section id="handmade" className="handmade-section section-pad" data-testid="handmade-section">
-        <div className="handmade-heading">
-          <SectionLabel testId="handmade-eyebrow">The handmade process</SectionLabel>
-          <h2 data-testid="handmade-headline">
-            Dibuat sepenuh hati,
-            <em> satu demi satu.</em>
-          </h2>
-          <p data-testid="handmade-description">
-            Produk Batika dibuat melalui proses handmade dengan care dan accuracy untuk memberi kualitas terbaik yang terasa di setiap detail.
-          </p>
-        </div>
-        <div className="process-list">
-          <div className="process-item" data-testid="process-step-fabric">
-            <span>01</span><Scissors size={19} /><div><h3 data-testid="process-title-fabric">Kain pilihan</h3><p data-testid="process-description-fabric">Setiap lembar batik dipilih untuk menemukan perpaduan warna dan motif yang paling hidup.</p></div>
+      <section className="proof-section" data-testid="social-proof-section">
+        <div className="section-shell">
+          <div className="proof-header" data-reveal>
+            <div><Eyebrow testId="proof-eyebrow">Suara pelanggan</Eyebrow><h2 data-testid="proof-heading">Kisah yang akan hadir di sini.</h2></div>
+            <p data-testid="proof-description">Ruang ini disiapkan untuk pengalaman nyata pelanggan Batika setelah testimoni terverifikasi tersedia.</p>
           </div>
-          <div className="process-item" data-testid="process-step-cutting">
-            <span>02</span><span className="process-dot" /><div><h3 data-testid="process-title-cutting">Pola & jahitan presisi</h3><p data-testid="process-description-cutting">Kulit dipotong, dirapikan, dan disatukan dengan ketelitian tangan manusia.</p></div>
+          <div className="testimonial-grid">
+            {["Pengalaman menerima produk", "Detail motif & kualitas", "Pengalaman proses pre-order"].map((title, index) => (
+              <article key={title} className="testimonial-placeholder" data-reveal data-testid={`testimonial-placeholder-${index + 1}`}>
+                <span data-testid={`testimonial-label-${index + 1}`}>Placeholder testimoni</span>
+                <h3 data-testid={`testimonial-title-${index + 1}`}>{title}</h3>
+                <p data-testid={`testimonial-copy-${index + 1}`}>Testimoni pelanggan asli akan ditampilkan setelah mendapat persetujuan publikasi.</p>
+              </article>
+            ))}
           </div>
-          <div className="process-item" data-testid="process-step-finishing">
-            <span>03</span><Check size={19} /><div><h3 data-testid="process-title-finishing">Finishing dengan rasa</h3><p data-testid="process-description-finishing">Setiap hardware, lining, dan sudut diperiksa sebelum karya menemukan pemiliknya.</p></div>
+          <div className="social-proof-links" data-testid="official-channel-links">
+            <a href="https://www.instagram.com/batika_bag/" target="_blank" rel="noreferrer" data-testid="instagram-link"><Instagram size={20} /><span><strong>Instagram</strong>@batika_bag</span><ArrowRight size={16} /></a>
+            <a href="https://www.tiktok.com/@batikabag" target="_blank" rel="noreferrer" data-testid="tiktok-link"><Music2 size={20} /><span><strong>TikTok</strong>@batikabag</span><ArrowRight size={16} /></a>
+            <a href="https://web.facebook.com/BatikaBag/" target="_blank" rel="noreferrer" data-testid="facebook-link"><Facebook size={20} /><span><strong>Facebook</strong>BatikaBag</span><ArrowRight size={16} /></a>
+            <a href="https://www.tokopedia.com/batikaindonesia" target="_blank" rel="noreferrer" data-testid="tokopedia-link"><Store size={20} /><span><strong>Tokopedia</strong>batikaindonesia</span><ArrowRight size={16} /></a>
+            <a href="https://shopee.co.id/batikabag" target="_blank" rel="noreferrer" data-testid="shopee-link"><Gift size={20} /><span><strong>Shopee</strong>batikabag</span><ArrowRight size={16} /></a>
           </div>
         </div>
       </section>
 
-      <section id="inquiry-section" className="inquiry-section section-pad" data-testid="inquiry-section">
-        <div className="inquiry-intro">
-          <SectionLabel testId="inquiry-eyebrow">Made for you</SectionLabel>
-          <h2 data-testid="inquiry-headline">Mulai dari sebuah
-            <em> percakapan.</em>
-          </h2>
-          <p data-testid="inquiry-description">Punya bayangan tas impianmu? Pilih preferensi dasar di bawah, kami bantu lanjutkan detailnya lewat WhatsApp.</p>
+      <section id="faq" className="faq-section section-shell" data-testid="faq-section">
+        <div className="faq-intro" data-reveal>
+          <Eyebrow testId="faq-eyebrow">Sebelum memesan</Eyebrow>
+          <h2 data-testid="faq-heading">Pertanyaan yang sering ditanyakan</h2>
+          <p data-testid="faq-description">Belum menemukan jawaban? Tim Batika siap membantu melalui WhatsApp.</p>
+          <WhatsAppCta testId="faq-whatsapp-button" kind="outline">Tanya Admin Batika</WhatsAppCta>
         </div>
-        <div className="inquiry-card" data-testid="interactive-inquiry-box">
-          <div className="inquiry-field">
-            <label htmlFor="inquiry-category" data-testid="inquiry-category-label">Model tas</label>
-            <select id="inquiry-category" value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value)} data-testid="inquiry-category-select">
-              <option>Tas Selempang</option><option>Tote Bag</option><option>Handbag</option><option>Clutch</option>
-            </select>
-          </div>
-          <div className="inquiry-field">
-            <label htmlFor="inquiry-motif" data-testid="inquiry-motif-label">Preferensi motif</label>
-            <select id="inquiry-motif" value={selectedMotif} onChange={(event) => setSelectedMotif(event.target.value)} data-testid="inquiry-motif-select">
-              <option>Kawung</option><option>Parang Rusak</option><option>Nitik / Truntum</option><option>Custom / konsultasi dulu</option>
-            </select>
-          </div>
-          <div className="inquiry-field">
-            <label htmlFor="inquiry-color" data-testid="inquiry-color-label">Warna kulit</label>
-            <select id="inquiry-color" value={selectedColor} onChange={(event) => setSelectedColor(event.target.value)} data-testid="inquiry-color-select">
-              <option>Soga Brown</option><option>Deep Black</option><option>Tan Karamel</option><option>Maroon Keraton</option>
-            </select>
-          </div>
-          <div className="inquiry-result" data-testid="inquiry-message-preview">
-            <span>Pesanmu akan dimulai dengan</span>
-            <strong>“Halo Batika Indonesia, saya tertarik dengan {selectedCategory}...”</strong>
-          </div>
-          <WhatsAppButton href={whatsappUrl(inquiryMessage)} testId="inquiry-whatsapp-button" variant="green">
-            Kirim preferensi saya
-          </WhatsAppButton>
+        <div className="faq-list" data-testid="faq-list">
+          {faqs.map((faq, index) => (
+            <details key={faq.question} data-testid={`faq-item-${index + 1}`}>
+              <summary data-testid={`faq-question-${index + 1}`}><span>{faq.question}</span><ChevronDown size={19} aria-hidden="true" /></summary>
+              <p data-testid={`faq-answer-${index + 1}`}>{faq.answer}</p>
+            </details>
+          ))}
         </div>
       </section>
 
-      <section id="kontak" className="contact-section section-pad dark-section" data-testid="contact-section">
-        <div className="contact-topline">
-          <SectionLabel testId="contact-eyebrow">Find your Batika</SectionLabel>
-          <span className="contact-batik-label" data-testid="contact-location-label">Maguwoharjo · Yogyakarta</span>
-        </div>
-        <div className="contact-main">
-          <div>
-            <h2 data-testid="contact-headline">Mari bertemu dengan karya yang tepat.</h2>
-            <p data-testid="contact-description">Datang ke butik, lihat koleksi yang tersedia, atau mulai dari chat kecil dengan tim kami.</p>
-          </div>
-          <WhatsAppButton href={whatsappUrl("Halo Batika Indonesia, saya ingin berkonsultasi tentang koleksi tas batik handmade.")} testId="contact-whatsapp-button" variant="light">
-            Hubungi Batika
-          </WhatsAppButton>
-        </div>
-        <div className="contact-details">
-          <div className="contact-detail" data-testid="contact-address">
-            <MapPin size={18} aria-hidden="true" /><div><span>Alamat butik</span><strong>Gg. Santan 1 No. 10c, Maguwoharjo, Depok, Sleman, Yogyakarta 55282</strong></div>
-          </div>
-          <div className="contact-detail" data-testid="contact-email">
-            <Mail size={18} aria-hidden="true" /><div><span>Email</span><a href="mailto:butikbareng@gmail.com" data-testid="contact-email-link">butikbareng@gmail.com</a></div>
-          </div>
-          <div className="contact-detail" data-testid="contact-phone">
-            <Phone size={18} aria-hidden="true" /><div><span>WhatsApp</span><a href={whatsappUrl("Halo Batika Indonesia, saya ingin bertanya tentang koleksi tas batik.")} target="_blank" rel="noreferrer" data-testid="contact-phone-link">0858-0028-8414</a></div>
-          </div>
-        </div>
-        <div className="contact-footer-row">
-          <div className="social-links" data-testid="social-links">
-            <a href="https://www.instagram.com/batika_bag/" target="_blank" rel="noreferrer" data-testid="social-instagram-link"><Instagram size={17} /> @batika_bag</a>
-            <a href="https://www.tiktok.com/@batikabag" target="_blank" rel="noreferrer" data-testid="social-tiktok-link"><Music2 size={17} /> @batikabag</a>
-            <a href="https://web.facebook.com/BatikaBag/" target="_blank" rel="noreferrer" data-testid="social-facebook-link"><Facebook size={17} /> Batika Bag</a>
-          </div>
-          <div className="marketplace-links" data-testid="marketplace-links">
-            <a href="https://www.tokopedia.com/batikaindonesia" target="_blank" rel="noreferrer" data-testid="tokopedia-link">Tokopedia <ArrowUpRight size={14} /></a>
-            <a href="https://shopee.co.id/batikabag" target="_blank" rel="noreferrer" data-testid="shopee-link">Shopee <ArrowUpRight size={14} /></a>
-          </div>
+      <section className="final-cta" data-testid="final-cta-section">
+        <BatikPattern className="final-pattern" />
+        <div className="final-cta-inner" data-reveal>
+          <span className="final-kicker" data-testid="final-cta-kicker">Batch pre-order tersedia terbatas</span>
+          <h2 data-testid="final-cta-heading">Miliki Payung Batik Eksklusif Anda Sekarang</h2>
+          <p data-testid="final-cta-description">Pesan hari ini untuk masuk antrean pengerjaan. Tim kami akan membantu memilih motif yang tersedia.</p>
+          <WhatsAppCta testId="final-whatsapp-button" kind="light">Chat Kami di WhatsApp</WhatsAppCta>
         </div>
       </section>
 
-      <footer className="site-footer" data-testid="site-footer">
-        <div className="footer-brand">
-          <img src={ASSETS.logo} alt="Logo Batika Indonesia" data-testid="footer-logo-image" />
-          <span data-testid="footer-tagline">Tas batik handmade dari Yogyakarta.</span>
+      <footer id="kontak" className="footer" data-testid="footer">
+        <div className="section-shell footer-main">
+          <div className="footer-brand" data-testid="footer-brand">
+            <img src={LOGO} alt="Batika" loading="lazy" data-testid="footer-logo-image" />
+            <p data-testid="footer-brand-description">Kriya batik handmade dari Yogyakarta—membawa warisan menjadi bagian dari hari ini.</p>
+          </div>
+          <div className="footer-contact" data-testid="footer-contact">
+            <h2 data-testid="footer-contact-heading">Hubungi Kami</h2>
+            <a href="https://maps.app.goo.gl/MxkztRoyuiWoDqhRA" target="_blank" rel="noreferrer" data-testid="footer-address-link"><MapPin size={17} /> <span>Jl. Matraman No. 4-24, Nanggulan, Maguwoharjo, Depok, Sleman</span></a>
+            <a href="mailto:batikabagindonesia@gmail.com" data-testid="footer-email-link"><Mail size={17} /> <span>batikabagindonesia@gmail.com</span></a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" data-testid="footer-phone-link"><Phone size={17} /> <span>+62 858-0028-8414</span></a>
+          </div>
+          <div className="footer-menu" data-testid="footer-menu">
+            <h2 data-testid="footer-menu-heading">Jelajahi</h2>
+            <a href="#produk" data-testid="footer-produk-link">Produk</a>
+            <a href="#preorder" data-testid="footer-preorder-link">Cara Pesan</a>
+            <a href="#cerita" data-testid="footer-cerita-link">Cerita Kami</a>
+            <a href="#faq" data-testid="footer-faq-link">FAQ</a>
+          </div>
         </div>
-        <span data-testid="footer-copyright">© {new Date().getFullYear()} Batika Indonesia</span>
-        <a href="#top" className="back-top" data-testid="back-to-top-link">Kembali ke atas <ArrowUpRight size={15} /></a>
+        <div className="footer-bottom section-shell">
+          <span data-testid="footer-copyright">© 2026 Batika Indonesia. All rights reserved.</span>
+          <div data-testid="footer-social-links">
+            <a href="https://www.instagram.com/batika_bag/" target="_blank" rel="noreferrer" aria-label="Instagram" data-testid="footer-instagram-link"><Instagram size={17} /></a>
+            <a href="https://www.tiktok.com/@batikabag" target="_blank" rel="noreferrer" aria-label="TikTok" data-testid="footer-tiktok-link"><Music2 size={17} /></a>
+            <a href="https://web.facebook.com/BatikaBag/" target="_blank" rel="noreferrer" aria-label="Facebook" data-testid="footer-facebook-link"><Facebook size={17} /></a>
+          </div>
+        </div>
       </footer>
 
-      <a
-        href={whatsappUrl("Halo Batika Indonesia, saya melihat website Anda dan ingin menanyakan tas batik handmade yang tersedia hari ini.")}
-        target="_blank"
-        rel="noreferrer"
-        className="floating-whatsapp"
-        aria-label="Chat WhatsApp dengan Batika Indonesia"
-        data-testid="floating-whatsapp-button"
-      >
-        <MessageCircle size={20} fill="currentColor" aria-hidden="true" />
-        <span>Chat WhatsApp</span>
+      <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="floating-whatsapp" aria-label="Pesan Payung Batik via WhatsApp" data-testid="floating-whatsapp-button">
+        <MessageCircle size={21} fill="currentColor" aria-hidden="true" /><span>Pesan via WhatsApp</span>
       </a>
     </main>
   );
