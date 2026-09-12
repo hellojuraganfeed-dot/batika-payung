@@ -2,26 +2,25 @@
 
 ## Tujuan
 
-One-page mobile-first yang menggantikan halaman tas sebelumnya dan berfokus mengubah pengunjung menjadi percakapan WhatsApp untuk Payung Batik Handmade Jumbo Batika. Halaman bukan e-commerce: tidak ada cart, checkout, akun, atau harga yang diklaim.
+One-page mobile-first yang menggantikan halaman tas sebelumnya dan berfokus mengubah pengunjung menjadi percakapan WhatsApp untuk koleksi Payung Batik Tulis Batika. Halaman bukan e-commerce: tidak ada cart, checkout, atau akun; harga tiap ukuran ditampilkan sebagai referensi sebelum pengunjung menghubungi admin.
 
 ## Produk dan klaim
 
-- Produk: Payung Batik Handmade Jumbo — Anti UV, Lipat Otomatis
-- Material: kain waterproof, rangka aluminium, lapisan anti UV
-- Diameter terbuka: 110 cm
-- Panjang dilipat: 28 cm
-- Panjang ditarik: 58 cm
-- Sistem: lipat 3, otomatis buka–tutup satu tombol
-- Jari-jari: 12
-- Sistem pemesanan: pre-order, estimasi proses pengerjaan dan pengiriman ± 20 hari
-- CTA tunggal: WhatsApp +62 858-0028-8414 dengan pesan yang sama di seluruh halaman
+- Produk: Payung Batik Tulis Handmade Batika
+- Varian Reguler Lipat: diameter ±98 cm, Rp400.000–Rp450.000
+- Varian Jumbo Lipat: diameter ±105 cm, Rp500.000–Rp550.000
+- Varian Payung Panjang: diameter ±115 cm, Rp550.000–Rp600.000
+- Varian Payung Golf: diameter ±120 cm, Rp700.000
+- Fitur: batik tulis, anti UV, anti air, anti badai, dan tidak luntur
+- Sistem pemesanan: ready stock tergantung motif; jika habis, pre-order dengan estimasi sekitar ±2 minggu
+- CTA utama: WhatsApp +62 858-0028-8414; setiap kartu ukuran memiliki pesan kontekstual yang menyebut varian, diameter, dan harga
 
 ## Alur utama
 
 1. Hero menjelaskan manfaat utama dan langsung menawarkan CTA WhatsApp.
 2. Problem/solution membandingkan kendala payung biasa dengan manfaat Batika.
-3. Spesifikasi dan galeri menggunakan foto yang diekstrak dari PDF pengguna.
-4. Bagian pre-order menjelaskan estimasi 20 hari dan empat tahap pemesanan.
+3. Empat kartu varian menampilkan diameter, harga, status ready stock/PO, dan CTA WhatsApp kontekstual; fitur dan galeri memakai foto dari PDF pengguna.
+4. Bagian pre-order menjelaskan ready stock tergantung motif, estimasi PO ±2 minggu, dan empat tahap pemesanan.
 5. Cerita brand, nilai lokal, handmade, dan regenerasi pembatik membangun kepercayaan.
 6. Social proof menampilkan kanal resmi dan placeholder testimoni yang jelas sampai testimoni terverifikasi tersedia.
 7. FAQ mengarahkan kebijakan custom, pembayaran, dan COD untuk dikonfirmasi melalui WhatsApp.

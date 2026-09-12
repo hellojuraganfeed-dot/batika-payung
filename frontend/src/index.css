@@ -111,6 +111,23 @@ button, a, summary { -webkit-tap-highlight-color: transparent; }
 .solution-card.featured h3 { color: var(--paper); }
 .solution-card > p:last-child { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
 
+.variant-section { padding-bottom: 110px; }
+.variant-header { margin-bottom: 39px; display: flex; justify-content: space-between; align-items: end; gap: 50px; }
+.variant-header h2 { margin: 0; color: var(--sogan-deep); font: 500 clamp(2.7rem,4.5vw,4.7rem)/1.03 "Lora Variable", serif; letter-spacing: -.052em; }
+.variant-header > p { max-width: 390px; margin: 0 0 5px; color: var(--muted); font-size: 12px; line-height: 1.75; }
+.variant-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 13px; }
+.variant-card { min-width: 0; padding: 24px 21px; display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--paper); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.variant-card:hover { transform: translateY(-6px); border-color: rgba(201,161,90,.65); box-shadow: 0 18px 36px rgba(73,52,42,.1); }
+.variant-card-top { display: flex; justify-content: space-between; align-items: center; color: var(--gold); }
+.variant-card-top span { font: 600 9px/1 "IBM Plex Mono", monospace; }
+.variant-card h3 { margin: 43px 0 12px; color: var(--sogan-deep); font: 500 25px/1.05 "Lora Variable", serif; letter-spacing: -.035em; }
+.variant-diameter { display: flex; align-items: center; gap: 7px; color: var(--sogan-soft); font-size: 10px; font-weight: 700; }
+.variant-price { margin-top: 19px; color: var(--sogan); font: 500 20px/1.1 "Lora Variable", serif; }
+.variant-card > p { min-height: 68px; margin: 14px 0; color: var(--muted); font-size: 10px; line-height: 1.65; }
+.variant-stock { margin-bottom: 19px; display: flex; align-items: flex-start; gap: 7px; color: #38745e; font-size: 8px; line-height: 1.45; font-weight: 750; text-transform: uppercase; letter-spacing: .04em; }
+.variant-stock svg { flex: 0 0 auto; }
+.variant-card .whatsapp-cta { width: 100%; min-height: 43px; margin-top: auto; padding-inline: 13px; font-size: 9px; }
+
 .spec-section { padding-block: 110px; color: var(--paper); background: var(--sogan-deep); position: relative; overflow: hidden; }
 .spec-pattern { width: 380px; height: 530px; right: -100px; top: -100px; color: var(--gold); }
 .spec-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(55px,9vw,130px); align-items: center; position: relative; z-index: 1; }
@@ -243,6 +260,7 @@ button, a, summary { -webkit-tap-highlight-color: transparent; }
   .hero-orbit { width: min(74vw,610px); }
   .problem-section { grid-template-columns: 1fr; }
   .problem-heading { max-width: 650px; }
+  .variant-grid { grid-template-columns: repeat(2,1fr); }
   .spec-inner { grid-template-columns: 1fr; }
   .spec-gallery { min-height: 650px; width: min(100%,680px); }
   .preorder-inner, .faq-section { grid-template-columns: 1fr; }
@@ -276,6 +294,10 @@ button, a, summary { -webkit-tap-highlight-color: transparent; }
   .trust-ribbon span { width: calc(50% - 20px); font-size: 7px; }
   .trust-ribbon i { display: none; }
   .problem-section, .gallery-section, .story-section, .values-section, .faq-section { padding-block: 78px; }
+  .variant-section { padding-bottom: 78px; }
+  .variant-header { align-items: flex-start; flex-direction: column; gap: 18px; }
+  .variant-grid { grid-template-columns: 1fr; }
+  .variant-card > p { min-height: auto; }
   .problem-heading h2, .spec-copy h2, .gallery-heading h2, .preorder-intro h2, .story-content h2, .values-header h2, .proof-header h2, .faq-intro h2 { font-size: clamp(2.55rem,12vw,4rem); }
   .solution-grid { display: flex; flex-direction: column; }
   .solution-card { min-height: 265px; border-right: 0; border-bottom: 1px solid var(--line); }

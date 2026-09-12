@@ -16,7 +16,6 @@ import {
   Menu,
   MessageCircle,
   Music2,
-  PackageCheck,
   Palette,
   Phone,
   Ruler,
@@ -30,6 +29,11 @@ import {
 
 const WHATSAPP_URL =
   "https://wa.me/6285800288414?text=Halo%20Batika%2C%20saya%20tertarik%20dengan%20Payung%20Batik%20Handmade%20Jumbo%20Anti%20UV.%20Boleh%20info%20lebih%20lanjut%3F";
+
+const variantWhatsappUrl = (name: string, diameter: string, price: string) =>
+  `https://wa.me/6285800288414?text=${encodeURIComponent(
+    `Halo Batika, saya tertarik dengan ${name} Batika diameter ${diameter} dengan harga ${price}. Mohon info motif yang ready stock atau estimasi pre-order.`,
+  )}`;
 
 const LOGO = "/payung/batika-logo.webp";
 
@@ -50,17 +54,24 @@ const navItems = [
 ];
 
 const heroFeatures = [
-  { label: "Handmade", icon: Sparkles, id: "handmade" },
+  { label: "Batik tulis", icon: Sparkles, id: "batik-tulis" },
   { label: "Anti UV", icon: Sun, id: "anti-uv" },
-  { label: "Buka–tutup otomatis", icon: Umbrella, id: "otomatis" },
-  { label: "Diameter 110 cm", icon: Ruler, id: "diameter" },
+  { label: "Anti air & badai", icon: ShieldCheck, id: "anti-air-badai" },
+  { label: "4 pilihan ukuran", icon: Ruler, id: "empat-ukuran" },
+];
+
+const productVariants = [
+  { id: "reguler-lipat", number: "01", name: "Reguler Lipat", diameter: "±98 cm", price: "Rp400.000–Rp450.000", description: "Ringkas untuk dibawa sehari-hari dengan bukaan yang tetap nyaman untuk satu orang." },
+  { id: "jumbo-lipat", number: "02", name: "Jumbo Lipat", diameter: "±105 cm", price: "Rp500.000–Rp550.000", description: "Lebih lega namun tetap praktis dilipat—seimbang antara perlindungan dan portabilitas." },
+  { id: "payung-panjang", number: "03", name: "Payung Panjang", diameter: "±115 cm", price: "Rp550.000–Rp600.000", description: "Siluet klasik dengan bentang lebar untuk tampilan yang anggun dan perlindungan ekstra." },
+  { id: "payung-golf", number: "04", name: "Payung Golf", diameter: "±120 cm", price: "Rp700.000", description: "Ukuran paling luas untuk kebutuhan outdoor, hadiah premium, atau perlindungan maksimal." },
 ];
 
 const faqs = [
   {
     question: "Berapa lama proses pengerjaan payung?",
     answer:
-      "Estimasi proses pengerjaan dan pengiriman adalah sekitar 20 hari, mengikuti antrean pre-order. Tim Batika akan mengonfirmasi estimasi terbaru melalui WhatsApp sebelum pesanan diproses.",
+      "Jika motif atau ukuran pilihan sedang tidak ready stock, estimasi proses pre-order adalah sekitar 2 minggu. Tim Batika akan mengonfirmasi ketersediaan dan estimasi terbaru melalui WhatsApp sebelum pesanan diproses.",
   },
   {
     question: "Apakah bisa memilih atau custom motif?",
@@ -124,15 +135,17 @@ function WhatsAppCta({
   children,
   testId,
   kind = "primary",
+  href = WHATSAPP_URL,
 }: {
   children: ReactNode;
   testId: string;
   kind?: "primary" | "light" | "outline";
+  href?: string;
 }) {
   return (
     <a
       className={`whatsapp-cta whatsapp-cta-${kind}`}
-      href={WHATSAPP_URL}
+      href={href}
       target="_blank"
       rel="noreferrer"
       data-testid={testId}
@@ -189,11 +202,11 @@ export default function Home() {
         <div className="hero-content" data-reveal>
           <Eyebrow testId="hero-eyebrow">Kriya Batik Yogyakarta · Sejak 2018</Eyebrow>
           <h1 data-testid="hero-headline">
-            Payung Batik Eksklusif,
-            <em> Anti UV & Otomatis</em>
+            Payung Batik Tulis Eksklusif,
+            <em> Anti UV & Tahan Badai</em>
           </h1>
           <p className="hero-subheadline" data-testid="hero-subheadline">
-            Payung lipat jumbo berdiameter 110 cm dengan material waterproof dan perlindungan anti UV—karya tangan pembatik Yogyakarta untuk gaya harian maupun hadiah penuh makna.
+            Empat pilihan ukuran dari reguler lipat hingga payung golf—anti air, tidak luntur, dan dibuat oleh pembatik Yogyakarta untuk gaya harian maupun hadiah penuh makna.
           </p>
           <div className="hero-badges" data-testid="hero-feature-badges">
             {heroFeatures.map(({ label, icon: Icon, id }) => (
@@ -209,7 +222,7 @@ export default function Home() {
             </a>
           </div>
           <p className="hero-note" data-testid="hero-preorder-note">
-            <Clock3 size={15} aria-hidden="true" /> Sistem pre-order · estimasi ± 20 hari
+            <Clock3 size={15} aria-hidden="true" /> Ready stock tergantung motif · PO ± 2 minggu
           </p>
         </div>
         <div className="hero-product" data-reveal data-testid="hero-product-visual">
@@ -217,7 +230,7 @@ export default function Home() {
           <span className="hero-edition" data-testid="hero-edition-label">01 · Nila Peksi</span>
           <img src="/payung/payung-01.webp" alt="Payung Batik Handmade Jumbo motif indigo dan soga dalam posisi terbuka" fetchPriority="high" data-testid="hero-product-image" />
           <div className="hero-size-note" data-testid="hero-size-note">
-            <strong>110</strong><span>cm<br />diameter</span>
+            <strong>4</strong><span>pilihan<br />ukuran</span>
           </div>
         </div>
       </section>
@@ -229,7 +242,7 @@ export default function Home() {
         <i aria-hidden="true">✦</i>
         <span data-testid="trust-ribbon-uv">Perlindungan Anti UV</span>
         <i aria-hidden="true">✦</i>
-        <span data-testid="trust-ribbon-preorder">Dibuat Khusus via Pre-Order</span>
+        <span data-testid="trust-ribbon-preorder">Ready Stock & PO ± 2 Minggu</span>
       </section>
 
       <section className="problem-section section-shell" data-testid="problem-solution-section">
@@ -263,6 +276,34 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="variant-section section-shell" data-testid="product-variant-section">
+        <div className="variant-header" data-reveal>
+          <div>
+            <Eyebrow testId="variant-eyebrow">Pilih sesuai kebutuhan Anda</Eyebrow>
+            <h2 data-testid="variant-heading">Empat Ukuran Payung Batika</h2>
+          </div>
+          <p data-testid="variant-description">Ready stock mengikuti ketersediaan motif. Jika varian pilihan Anda habis, pesanan dapat masuk antrean PO sekitar 2 minggu.</p>
+        </div>
+        <div className="variant-grid" data-testid="product-variant-grid">
+          {productVariants.map((variant) => (
+            <article className="variant-card" key={variant.id} data-reveal data-testid={`variant-card-${variant.id}`}>
+              <div className="variant-card-top">
+                <span data-testid={`variant-number-${variant.id}`}>{variant.number}</span>
+                <Umbrella size={21} strokeWidth={1.5} aria-hidden="true" />
+              </div>
+              <h3 data-testid={`variant-name-${variant.id}`}>{variant.name}</h3>
+              <div className="variant-diameter" data-testid={`variant-diameter-${variant.id}`}><Ruler size={15} /> Diameter {variant.diameter}</div>
+              <strong className="variant-price" data-testid={`variant-price-${variant.id}`}>{variant.price}</strong>
+              <p data-testid={`variant-description-${variant.id}`}>{variant.description}</p>
+              <span className="variant-stock" data-testid={`variant-stock-${variant.id}`}><CircleCheck size={13} /> Ready stock motif tertentu · PO ±2 minggu</span>
+              <WhatsAppCta testId={`variant-whatsapp-button-${variant.id}`} kind="outline" href={variantWhatsappUrl(variant.name, variant.diameter, variant.price)}>
+                Tanya Varian Ini
+              </WhatsAppCta>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section id="produk" className="spec-section" data-testid="product-specification-section">
         <BatikPattern className="spec-pattern" />
         <div className="section-shell spec-inner">
@@ -277,15 +318,14 @@ export default function Home() {
           </div>
           <div className="spec-copy" data-reveal>
             <Eyebrow testId="spec-eyebrow">Detail yang dibuat untuk diandalkan</Eyebrow>
-            <h2 data-testid="spec-heading">Spesifikasi Payung Batik Jumbo</h2>
-            <p data-testid="spec-description">Dimensi lega, mekanisme praktis, dan detail yang dipilih untuk aktivitas sehari-hari.</p>
+            <h2 data-testid="spec-heading">Lima Fitur dalam Setiap Karya</h2>
+            <p data-testid="spec-description">Perpaduan proses batik tradisional dan kebutuhan perlindungan masa kini.</p>
             <dl className="spec-list" data-testid="spec-list">
-              <div data-testid="spec-material"><dt><Droplets size={18} /> Material</dt><dd>Kain waterproof, rangka aluminium + lapisan anti UV</dd></div>
-              <div data-testid="spec-diameter"><dt><Ruler size={18} /> Diameter</dt><dd>110 cm</dd></div>
-              <div data-testid="spec-folded-length"><dt><PackageCheck size={18} /> Panjang dilipat</dt><dd>28 cm</dd></div>
-              <div data-testid="spec-open-length"><dt><Umbrella size={18} /> Panjang ditarik</dt><dd>58 cm</dd></div>
-              <div data-testid="spec-fold-system"><dt><CircleCheck size={18} /> Sistem lipat</dt><dd>Lipat 3, otomatis buka–tutup satu tombol</dd></div>
-              <div data-testid="spec-ribs"><dt><Sparkles size={18} /> Jari-jari</dt><dd>12 jari-jari payung</dd></div>
+              <div data-testid="feature-batik-tulis"><dt><Palette size={18} /> Batik tulis</dt><dd>Motif dikerjakan dengan teknik batik tulis yang kaya karakter.</dd></div>
+              <div data-testid="feature-anti-uv"><dt><Sun size={18} /> Anti UV</dt><dd>Memberi perlindungan tambahan dari paparan sinar matahari.</dd></div>
+              <div data-testid="feature-anti-air"><dt><Droplets size={18} /> Anti air</dt><dd>Material tahan air untuk menemani aktivitas saat hujan.</dd></div>
+              <div data-testid="feature-anti-badai"><dt><ShieldCheck size={18} /> Anti badai</dt><dd>Konstruksi payung dirancang lebih siap menghadapi terpaan angin.</dd></div>
+              <div data-testid="feature-tidak-luntur"><dt><BadgeCheck size={18} /> Tidak luntur</dt><dd>Warna batik diproses agar tetap indah dan tidak mudah luntur.</dd></div>
             </dl>
             <WhatsAppCta testId="spec-whatsapp-button">Tanyakan Ketersediaan Motif</WhatsAppCta>
           </div>
@@ -315,18 +355,18 @@ export default function Home() {
       <section id="preorder" className="preorder-section" data-testid="preorder-section">
         <div className="section-shell preorder-inner">
           <div className="preorder-intro" data-reveal>
-            <span className="preorder-badge" data-testid="preorder-badge"><Clock3 size={16} /> Dibuat sesuai antrean</span>
-            <Eyebrow testId="preorder-eyebrow">Sistem Pemesanan · Pre-Order</Eyebrow>
-            <h2 data-testid="preorder-heading">Kualitas handmade<br />memerlukan waktu.</h2>
-            <p data-testid="preorder-description">Setiap payung dikerjakan khusus untuk Anda, bukan produksi massal. Itulah mengapa kami memilih proses yang teliti daripada terburu-buru.</p>
-            <div className="preorder-estimate" data-testid="preorder-estimate"><strong>± 20 hari</strong><span>estimasi proses pengerjaan & pengiriman</span></div>
+            <span className="preorder-badge" data-testid="preorder-badge"><Clock3 size={16} /> Ready Stock & Pre-Order</span>
+            <Eyebrow testId="preorder-eyebrow">Sistem Pemesanan yang Transparan</Eyebrow>
+            <h2 data-testid="preorder-heading">Pilih motif ready,<br />atau kami buatkan.</h2>
+            <p data-testid="preorder-description">Ready stock tersedia tergantung motif. Jika motif atau ukuran pilihan Anda sedang habis, payung akan masuk antrean pre-order dan dikerjakan khusus oleh perajin Batika.</p>
+            <div className="preorder-estimate" data-testid="preorder-estimate"><strong>± 2 minggu</strong><span>estimasi pengerjaan untuk pesanan pre-order</span></div>
           </div>
           <div className="preorder-card" data-reveal data-testid="preorder-process-card">
             <h3 data-testid="preorder-process-heading">Dari pesan hingga sampai</h3>
             <ol data-testid="preorder-steps">
               <li data-testid="preorder-step-1"><span>01</span><div><strong>Hubungi Batika</strong><p>Konsultasikan motif dan detail pesanan via WhatsApp.</p></div></li>
-              <li data-testid="preorder-step-2"><span>02</span><div><strong>Konfirmasi pesanan</strong><p>Admin menginformasikan pilihan, pembayaran, dan estimasi batch.</p></div></li>
-              <li data-testid="preorder-step-3"><span>03</span><div><strong>Proses handmade</strong><p>Payung masuk antrean pengerjaan perajin Batika.</p></div></li>
+              <li data-testid="preorder-step-2"><span>02</span><div><strong>Cek ready stock</strong><p>Admin mengecek ukuran dan motif yang tersedia saat itu.</p></div></li>
+              <li data-testid="preorder-step-3"><span>03</span><div><strong>Ready dikirim / masuk PO</strong><p>Produk ready dapat diproses; jika habis, masuk antrean handmade ±2 minggu.</p></div></li>
               <li data-testid="preorder-step-4"><span>04</span><div><strong>Dikirim untuk Anda</strong><p>Pesanan diperiksa dan dikirim setelah selesai.</p></div></li>
             </ol>
             <WhatsAppCta testId="preorder-whatsapp-button">Pesan Sekarang & Masuk Antrian</WhatsAppCta>
@@ -407,9 +447,9 @@ export default function Home() {
       <section className="final-cta" data-testid="final-cta-section">
         <BatikPattern className="final-pattern" />
         <div className="final-cta-inner" data-reveal>
-          <span className="final-kicker" data-testid="final-cta-kicker">Batch pre-order tersedia terbatas</span>
+          <span className="final-kicker" data-testid="final-cta-kicker">Ready stock motif tertentu · PO ±2 minggu</span>
           <h2 data-testid="final-cta-heading">Miliki Payung Batik Eksklusif Anda Sekarang</h2>
-          <p data-testid="final-cta-description">Pesan hari ini untuk masuk antrean pengerjaan. Tim kami akan membantu memilih motif yang tersedia.</p>
+          <p data-testid="final-cta-description">Tanyakan motif yang ready stock atau pesan hari ini untuk masuk antrean pengerjaan. Tim kami akan membantu memilih ukuran yang paling sesuai.</p>
           <WhatsAppCta testId="final-whatsapp-button" kind="light">Chat Kami di WhatsApp</WhatsAppCta>
         </div>
       </section>
