@@ -11,6 +11,7 @@ One-page mobile-first yang menggantikan halaman tas sebelumnya dan berfokus meng
 - Varian Jumbo Lipat: diameter ±105 cm, Rp500.000–Rp550.000
 - Varian Payung Panjang: diameter ±115 cm, Rp550.000–Rp600.000
 - Varian Payung Golf: diameter ±120 cm, Rp700.000
+- Setiap kartu varian menampilkan catatan: “Tersedia harga khusus untuk pemesanan partai besar”
 - Fitur: batik tulis, anti UV, anti air, anti badai, dan tidak luntur
 - Sistem pemesanan: ready stock tergantung motif; jika habis, pre-order dengan estimasi sekitar ±2 minggu
 - CTA utama: WhatsApp +62 858-0028-8414; setiap kartu ukuran memiliki pesan kontekstual yang menyebut varian, diameter, dan harga

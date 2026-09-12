@@ -294,6 +294,7 @@ export default function Home() {
               <h3 data-testid={`variant-name-${variant.id}`}>{variant.name}</h3>
               <div className="variant-diameter" data-testid={`variant-diameter-${variant.id}`}><Ruler size={15} /> Diameter {variant.diameter}</div>
               <strong className="variant-price" data-testid={`variant-price-${variant.id}`}>{variant.price}</strong>
+              <small className="variant-bulk-note" data-testid={`variant-bulk-note-${variant.id}`}>Tersedia harga khusus untuk pemesanan partai besar</small>
               <p data-testid={`variant-description-${variant.id}`}>{variant.description}</p>
               <span className="variant-stock" data-testid={`variant-stock-${variant.id}`}><CircleCheck size={13} /> Ready stock motif tertentu · PO ±2 minggu</span>
               <WhatsAppCta testId={`variant-whatsapp-button-${variant.id}`} kind="outline" href={variantWhatsappUrl(variant.name, variant.diameter, variant.price)}>

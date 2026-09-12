@@ -123,6 +123,7 @@ button, a, summary { -webkit-tap-highlight-color: transparent; }
 .variant-card h3 { margin: 43px 0 12px; color: var(--sogan-deep); font: 500 25px/1.05 "Lora Variable", serif; letter-spacing: -.035em; }
 .variant-diameter { display: flex; align-items: center; gap: 7px; color: var(--sogan-soft); font-size: 10px; font-weight: 700; }
 .variant-price { margin-top: 19px; color: var(--sogan); font: 500 20px/1.1 "Lora Variable", serif; }
+.variant-bulk-note { margin-top: 7px; color: var(--sogan-soft); font-size: 8px; line-height: 1.45; font-weight: 650; }
 .variant-card > p { min-height: 68px; margin: 14px 0; color: var(--muted); font-size: 10px; line-height: 1.65; }
 .variant-stock { margin-bottom: 19px; display: flex; align-items: flex-start; gap: 7px; color: #38745e; font-size: 8px; line-height: 1.45; font-weight: 750; text-transform: uppercase; letter-spacing: .04em; }
 .variant-stock svg { flex: 0 0 auto; }
