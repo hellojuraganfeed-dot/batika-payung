@@ -714,7 +714,7 @@ export default function Home() {
           <Eyebrow testId="story-eyebrow">Our history</Eyebrow>
           <h2 data-testid="story-heading">Cerita Batika</h2>
           <p className="story-lead" data-testid="story-lead">Warisan tidak cukup hanya disimpan. Ia perlu dipakai, dicintai, dan dibawa ke masa depan.</p>
-          <p data-testid="story-description">Batika didirikan pada 2018 dengan menggabungkan batik dan kerajinan kulit untuk menghadirkan apresiasi budaya Indonesia yang elegan dan modern. Dari Yogyakarta, kami terus mengeksplorasi cara baru agar batik hadir lebih dekat dalam keseharian.</p>
+          <p data-testid="story-description">Batika didirikan pada 2018 dengan menggabungkan batik dan inovasi untuk menghadirkan apresiasi budaya Indonesia yang elegan dan modern. Dari Yogyakarta, kami terus mengeksplorasi cara baru agar batik hadir lebih dekat dalam keseharian.</p>
           <div className="story-signature" data-testid="story-signature"><span aria-hidden="true" /> Karya lokal, rasa global</div>
         </div>
       </section>
