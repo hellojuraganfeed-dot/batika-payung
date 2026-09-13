@@ -706,9 +706,22 @@ export default function Home() {
 
       <section id="cerita" className="story-section section-shell" data-testid="story-section">
         <div className="story-photo" data-reveal>
-          <img src="https://images.unsplash.com/photo-1586319826907-1ff4aadbaddc?auto=format&fit=crop&w=1100&q=82" alt="Perajin batik bekerja dengan teliti" loading="lazy" data-testid="story-image" />
+          <img
+            src="/payung/Foto mbatik.jpeg"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (!target.dataset.triedFallback) {
+                target.dataset.triedFallback = "1";
+                target.src = "/payung/foto-mbatik.jpg";
+              }
+            }}
+            alt="Proses membatik payung Batika dengan canting"
+            loading="lazy"
+            referrerPolicy="no-referrer"
+            data-testid="story-image"
+          />
           <span className="story-year" data-testid="story-year">Est. 2018 · Yogyakarta</span>
-          <small className="story-photo-note" data-testid="story-photo-note">Ilustrasi suasana membatik</small>
+          <small className="story-photo-note" data-testid="story-photo-note">Proses canting payung batik Batika</small>
         </div>
         <div className="story-content" data-reveal>
           <Eyebrow testId="story-eyebrow">Our history</Eyebrow>
